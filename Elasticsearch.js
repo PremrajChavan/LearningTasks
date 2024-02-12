@@ -1,3 +1,5 @@
+// #Access First name 
+
 const dummyApiMet = async (event) => {
   try {
     const dummyQuery = {
@@ -17,6 +19,79 @@ const dummyApiMet = async (event) => {
     return toResponseMapper(response);
   } catch (error) {
     console.error('Error while getting the first name from dummyApi:', error);
+    throw error;
+  }
+};
+
+// #Access Last name 
+const dummyApiMet = async (event) => {
+  try {
+    const dummyQuery = {
+      query: {
+        match: {
+          "author.last_name": "Raj"
+        }
+      }
+    };
+
+    const response = await mySupplyProxy.search({
+      index: INDICES.DUMMYAPI,
+      body: dummyQuery,
+      _source: ['author.last_name'],
+    });
+
+    return toResponseMapper(response);
+  } catch (error) {
+    console.error('Error while getting the first name from dummyApi:', error);
+    throw error;
+  }
+};
+// #Access unique email 
+
+const dummyApiMet = async (event) => {
+  try {
+    const dummyQuery = {
+      query: {
+        wildcard: {
+          "author.email": "*Prem*"
+        }
+      }
+    };
+
+    const response = await mySupplyProxy.search({
+      index: INDICES.DUMMYAPI,
+      body: dummyQuery,
+      _source: ['author.email'],
+    });
+
+    return toResponseMapper(response);
+  } catch (error) {
+    console.error('Error while getting the email containing "Prem" from dummyApi:', error);
+    throw error;
+  }
+};
+
+// # GET unique product_id 
+
+const dummyApiMet = async (event) => {
+  try {
+    const dummyQuery = {
+      query: {
+        term: {
+          "product_id": 774199
+        }
+      }
+    };
+
+    const response = await mySupplyProxy.search({
+      index: INDICES.DUMMYAPI,
+      body: dummyQuery,
+      _source: ['product_id'],
+    });
+
+    return toResponseMapper(response);
+  } catch (error) {
+    console.error('Error while getting the product_id containing "774199" from dummyApi:', error);
     throw error;
   }
 };
